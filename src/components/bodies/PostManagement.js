@@ -53,7 +53,7 @@ const PostManagement = () => {
                             Passed
                         </Typography>} 
                     />
-                    <Tab value= {2} label={
+                    <Tab value= {3} label={
                         <Typography 
                             variant='h6' 
                             sx={{
