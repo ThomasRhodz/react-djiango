@@ -4,7 +4,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 
 
-const AdminManagement = () => {
+const AdminManagement = ({toast}) => {
     const [value, setValue] = React.useState(1);
 
     const handleChange = (event, newValue) => {

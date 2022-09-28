@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
-import theme from '../../src/theme.js';
+import theme from '../../src/styles/theme.js';
 
 export default function TopLayout(props) {
   return (

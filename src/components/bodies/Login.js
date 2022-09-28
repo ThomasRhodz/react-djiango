@@ -15,6 +15,7 @@ const Login = () => {
         top: '50%',
         left: '50%',
         overflow:'hidden',
+        border: '2px #61A8A4 solid',
         transform: 'translate(-50%, -50%)',
     }}>
         <Grid item sx={{p:2, pt:12, flexGrow:1, maxWidth:330, height:'100%', backgroundColor: '#61A8A4'}}>
