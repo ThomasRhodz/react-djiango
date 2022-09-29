@@ -203,7 +203,7 @@ const MenuDrawer = () => {
       <CssBaseline />
 
       {/* App bar: the bar that holds the menu icon and the logo */}
-      <AppBar position="fixed" open={open} sx={{backgroundColor: '#5E8B7E'}}> 
+      <AppBar position="fixed" open={open} sx={{backgroundColor: '#06283D'}}> 
         <Toolbar>
           <IconButton
             color="inherit"
@@ -215,9 +215,9 @@ const MenuDrawer = () => {
               ...(open && { display: 'none' }),
             }}
           >
-            <MenuIcon />
+            <MenuIcon style={{color:'white'}} />
           </IconButton>
-          <Typography variant="h6" sx={{fontFamily:'Arvo', flexGrow: 1}} noWrap component="div">
+          <Typography variant="h6" sx={{fontFamily:'Arvo', flexGrow: 1, color:'white'}} noWrap component="div">
             React Django Example
           </Typography>
 
@@ -226,7 +226,7 @@ const MenuDrawer = () => {
               color="inherit"
               onClick={() => navigate('/')}
             >
-              <HiOutlineLogout style={{fontSize: 28}} />
+              <HiOutlineLogout style={{fontSize: 28, color:'white'}} />
             </IconButton>
           </Tooltip>
 
@@ -237,11 +237,11 @@ const MenuDrawer = () => {
       <Drawer 
         variant="permanent" 
         open={open} 
-        PaperProps={{sx: {backgroundColor: '#5E8B7E'}}}
+        PaperProps={{sx: {backgroundColor: '#06283D'}}}
       >
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+            {theme.direction === 'rtl' ? <ChevronRightIcon style={{color:'white'}}/> : <ChevronLeftIcon style={{color:'white'}}/>}
           </IconButton>
         </DrawerHeader>
 

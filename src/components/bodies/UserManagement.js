@@ -4,7 +4,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import {AiOutlineUserAdd} from 'react-icons/ai'
 
-import UserTable from '../tables/UserTable';
+import ActiveUserTable from '../tables/ActiveUserTable';
 import InactiveUserTable from '../tables/InactiveUserTable';
 import NewUserForm from '../forms/NewUserForm';
 
@@ -36,7 +36,7 @@ const UserManagement = ({toast}) => {
         <Stack direction='column' alignItems={'center'}>
             <Stack direction='row' sx={{width:'100%', pb:2}}>
                 <Typography variant='h4' sx={{fontFamily:'arvo', flexGrow:1}}>
-                    User Management System {value}
+                    User Management System
                 </Typography>
                 <Tabs
                     value={value}
@@ -79,16 +79,16 @@ const UserManagement = ({toast}) => {
                 <Divider/>
             </Grid>
 
-            <Grid sx={{width:'100%', pt:3, display: value===2 ? 'none':'flex'}}>
-                <Stack direction='column'  >
-                    <Stack direction='row'> 
+            <Grid sx={{width:'100%', pt:5, display: value===1 ? 'flex':'none'}}>
+                <Stack direction='column' sx={{width:'100%'}}>
+                    <Stack direction='row'  sx={{width:'100%', marginBottom:'-10px'}}> 
                         <div style={{flexGrow:1}}/>
-                        <Button onClick={()=>handleClickOpen()} variant='contained' sx={{width:180, textTransform:'none', fontFamily:'arvo'}} startIcon={<AiOutlineUserAdd />}>
+                        <Button onClick={()=>handleClickOpen()} variant='contained' sx={{width:180, textTransform:'none', fontFamily:'arvo', color: 'white'}} startIcon={<AiOutlineUserAdd />}>
                             Add user
                         </Button>
                     </Stack>
                     
-                    <UserTable toast={(stringMessage) => toast(stringMessage)}/>
+                    <ActiveUserTable toast={(stringMessage) => toast(stringMessage)}/>
                 </Stack>
                
             </Grid>     

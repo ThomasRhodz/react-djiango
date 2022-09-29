@@ -16,6 +16,7 @@ import { useGetActiveUsersQuery } from '../../services/userAPi';
 const columns = [
     { id: 'UID', label: 'User ID', minWidth: 100 },
     { id: 'name', label: 'Name', minWidth: 180 },
+    { id: 'address', label: 'Address', minWidth: 180 },
     { id: 'email', label: 'Email', minWidth: 180 },
     { id: 'contact', label: 'Contact', minWidth: 180 },
     { id: 'role', label: 'Role', minWidth: 150 },
@@ -25,24 +26,26 @@ const columns = [
 
   const renderColumns = columns.map(({id, label, minWidth}) => {
     return (
-      <TableCell key={id} align="center" colSpan={1} sx={{ minWidth: minWidth, backgroundColor:'white' }}>
+      <TableCell key={id} align="center" colSpan={1} sx={{ minWidth: minWidth, backgroundColor:'white', fontFamily: 'arvo', fontWeight:'bold'}}>
         {label}
       </TableCell>
     )
   })
   
-  function createData(UID, name, email, contact, role, password, isActive) {
-    return { UID, name, email, contact, role, password, isActive};
+  function createData(UID, name, address, email, contact, role, password, isActive, first_name) {
+    return { UID, name, address, email, contact, role, password, isActive, first_name};
   }
 
-const UserTable = ({search, toast}) => {
+const ActiveEmployeeTable = ({search, toast}) => {
 
     
     const users = useGetActiveUsersQuery();
-    const rows = users.data ? users.data.data.map(({id, name, email, contact, role, password, isActive}) => createData(id, name, email, contact, role, password, isActive)) : [];
+    const rows = users.data ? users.data.data.map(({id, first_name, last_name, address, email, contact, role, password, isActive}) => createData(id, (first_name+' '+last_name), address, email, contact, role, password, isActive, first_name, last_name)) : [];
     
     const [id, setID] = React.useState('');
-    const [name, setName] = React.useState('');
+    const [first_name, setFirstName] = React.useState('');
+    const [last_name, setLatsName] = React.useState('');
+    const [address, setAddress] = React.useState('');
     const [role, setRole] = React.useState('');
     const [email, setEmail] = React.useState('');
     const [contact, setContact] = React.useState('');
@@ -64,10 +67,12 @@ const UserTable = ({search, toast}) => {
 
 
     //function for opening and closing the opening user view dialog
-    const handleUserOpen = (ID, name, role, email, contact, pass, stat) => {
+    const handleUserOpen = (ID, fname, lname, address, role, email, contact, pass, stat) => {
         setOpen(true)
         setID(ID)
-        setName(name)
+        setFirstName(fname)
+        setLastName(lname)
+        setAddress(address)
         setRole(role)
         setEmail(email)
         setPass(pass)
@@ -95,11 +100,11 @@ const UserTable = ({search, toast}) => {
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row) => {
                   return (
-                    <TableRow hover role="checkbox" tabIndex={-1} key={row.UID} onClick={() => handleUserOpen(row.UID, row.name, row.role, row.email, row.contact, row.password, row.is_active)}>
+                    <TableRow hover role="checkbox" tabIndex={-1} key={row.UID} onClick={() => handleUserOpen(row.UID, row.first_name, row.last_name, row.address, row.role, row.email, row.contact, row.password, row.is_active)}>
                       {columns.map((column) => {
                         const value = row[column.id];
                         return (
-                          <TableCell key={column.id} align='center'>
+                          <TableCell key={column.id} align='center' sx={{fontFamily: 'raleway',}}>
                             {value}
                           </TableCell>
                         );
@@ -137,4 +142,4 @@ const UserTable = ({search, toast}) => {
   )
 }
 
-export default UserTable
+export default ActiveEmployeeTable

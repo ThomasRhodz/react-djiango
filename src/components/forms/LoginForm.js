@@ -23,7 +23,7 @@ const LoginForm = () => {
         </Grid>
 
         <Grid sx={{pb:2}}>
-            <Button onClick={()=>{navigate('/module')}} variant='contained' sx={{width:'100%', backgroundColor:'#61A8A4', fontFamily: 'Arvo', textTransform:'none', borderRadius: 5}}>
+            <Button onClick={()=>{navigate('/module')}} variant='contained' sx={{width:'100%', backgroundColor:'#06283D', fontFamily: 'Arvo', textTransform:'none', borderRadius: 5, color:'white'}}>
                 Login
             </Button>
         </Grid>

@@ -10,8 +10,8 @@ import TableRow from '@mui/material/TableRow';
 
 //Dialog
 import Dialog from '@mui/material/Dialog';
-import { useGetInactiveUsersQuery } from '../../services/userAPi';
-import UserEnable from '../dialogs/UserEnable';
+import EditUserForm from '../forms/EditUserForm';
+import { useGetActiveUsersQuery } from '../../services/userAPi';
 
 const columns = [
     { id: 'UID', label: 'User ID', minWidth: 100 },
@@ -25,7 +25,7 @@ const columns = [
 
   const renderColumns = columns.map(({id, label, minWidth}) => {
     return (
-      <TableCell key={id} align="center" colSpan={1} sx={{ minWidth: minWidth, backgroundColor:'white', fontFamily: 'arvo',fontWeight:'bold'}}>
+      <TableCell key={id} align="center" colSpan={1} sx={{ minWidth: minWidth, backgroundColor:'white', fontFamily: 'arvo', fontWeight:'bold'}}>
         {label}
       </TableCell>
     )
@@ -35,10 +35,10 @@ const columns = [
     return { UID, name, email, contact, role, password, isActive};
   }
 
-const InactiveUserTable = ({search, toast}) => {
+const ActiveUserTable = ({search, toast}) => {
 
     
-    const users = useGetInactiveUsersQuery();
+    const users = useGetActiveUsersQuery();
     const rows = users.data ? users.data.data.map(({id, name, email, contact, role, password, isActive}) => createData(id, name, email, contact, role, password, isActive)) : [];
     
     const [id, setID] = React.useState('');
@@ -121,7 +121,7 @@ const InactiveUserTable = ({search, toast}) => {
         />
 
         <Dialog open={open} onClose={handleUserClose} scroll='body'>
-          <UserEnable 
+          <EditUserForm 
             onClose={() => handleUserClose()} 
             user_id={id} 
             user_name={name} 
@@ -137,4 +137,4 @@ const InactiveUserTable = ({search, toast}) => {
   )
 }
 
-export default InactiveUserTable
+export default ActiveUserTable

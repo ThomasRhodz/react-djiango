@@ -1,4 +1,4 @@
-import { Grid, TextField, Stack, DialogTitle, DialogActions, Divider, Button, IconButton, Tooltip } from '@mui/material'
+import { Grid, TextField, Stack, DialogTitle, DialogActions, Divider, Button, IconButton, Tooltip, Typography } from '@mui/material'
 import React, {useState} from 'react'
 import {AiTwotoneDelete} from 'react-icons/ai'
 
@@ -89,7 +89,11 @@ const handleDisableUser = () => {
     <Grid>
       <Stack direction='column' alignItems='center' sx={{ width: '100%' }}>
           <Grid item>
-            <DialogTitle>Edit User Detail </DialogTitle>
+            <DialogTitle>
+                <Typography variant='h6' sx={{fontFamily:'arvo'}}>
+                    Edit User Detail 
+                </Typography>
+            </DialogTitle>
           </Grid>
 
           <Grid item sx={{ width: '100%' }}>
