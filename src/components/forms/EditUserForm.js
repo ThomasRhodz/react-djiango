@@ -53,6 +53,7 @@ const EditUserForm = ({onClose, toast, user_id, user_name, user_email, user_cont
                 'contact': data.contact,
                 'role': 'User',
                 'password': data.password,
+                'isActive': 'Yes'
             }
         }
 
@@ -62,7 +63,6 @@ const EditUserForm = ({onClose, toast, user_id, user_name, user_email, user_cont
     }
     
 };
-
 
 
 const handleDisableUser = () => {

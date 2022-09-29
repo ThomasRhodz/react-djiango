@@ -5,6 +5,7 @@ import counterReducer from './counter'
 
 //RTK Query
 import { userApi } from '../services/userAPi'
+import { employeeApi } from '../services/employeeApi';
 
 
 
@@ -12,9 +13,10 @@ export const store = configureStore({
     reducer:{
         counter: counterReducer,
         [userApi.reducerPath]: userApi.reducer,
+        [employeeApi.reducerPath]: employeeApi.reducer
     },
 
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(userApi.middleware,),
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(userApi.middleware, employeeApi.middleware),
    
 });
 

@@ -10,8 +10,8 @@ import TableRow from '@mui/material/TableRow';
 
 //Dialog
 import Dialog from '@mui/material/Dialog';
-import EditUserForm from '../forms/EditUserForm';
-import { useGetActiveUsersQuery } from '../../services/userAPi';
+import EditEmployeeForm from '../forms/EditEmployeeForm';
+import { useGetActiveEmployeesQuery } from '../../services/employeeApi';
 
 const columns = [
     { id: 'UID', label: 'User ID', minWidth: 100 },
@@ -32,19 +32,19 @@ const columns = [
     )
   })
   
-  function createData(UID, name, address, email, contact, role, password, isActive, first_name) {
-    return { UID, name, address, email, contact, role, password, isActive, first_name};
+  function createData(UID, name, address, email, contact, role, password, isActive, first_name, last_name) {
+    return { UID, name, address, email, contact, role, password, isActive, first_name, last_name};
   }
 
 const ActiveEmployeeTable = ({search, toast}) => {
 
     
-    const users = useGetActiveUsersQuery();
+    const users = useGetActiveEmployeesQuery();
     const rows = users.data ? users.data.data.map(({id, first_name, last_name, address, email, contact, role, password, isActive}) => createData(id, (first_name+' '+last_name), address, email, contact, role, password, isActive, first_name, last_name)) : [];
     
     const [id, setID] = React.useState('');
     const [first_name, setFirstName] = React.useState('');
-    const [last_name, setLatsName] = React.useState('');
+    const [last_name, setLastName] = React.useState('');
     const [address, setAddress] = React.useState('');
     const [role, setRole] = React.useState('');
     const [email, setEmail] = React.useState('');
@@ -126,10 +126,12 @@ const ActiveEmployeeTable = ({search, toast}) => {
         />
 
         <Dialog open={open} onClose={handleUserClose} scroll='body'>
-          <EditUserForm 
+          <EditEmployeeForm 
             onClose={() => handleUserClose()} 
             user_id={id} 
-            user_name={name} 
+            user_first_name={first_name}
+            user_last_name={last_name}  
+            user_address={address} 
             user_role={role} 
             user_email={email} 
             user_contact={contact} 

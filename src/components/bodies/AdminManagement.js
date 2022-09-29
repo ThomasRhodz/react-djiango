@@ -1,23 +1,38 @@
-import {Divider, Grid, Stack, Typography } from '@mui/material'
+import {Divider, Grid, Stack, Typography, Button, Dialog } from '@mui/material'
 import * as React from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+import {AiOutlineUserAdd} from 'react-icons/ai'
 
+import NewEmployeeForm from '../forms/NewEmployeeForm';
+import ActiveEmployeeTable from '../tables/ActiveEmployeeTable';
 
 const AdminManagement = ({toast}) => {
     const [value, setValue] = React.useState(1);
+    const [open, setOpen] = React.useState(false); //-> for open and close of dialog
 
     const handleChange = (event, newValue) => {
       setValue(newValue);
     };
   
+    //function for opening and closing the dialog
+    const handleClickOpen = () => {
+        setOpen(true);
+
+      };
+      
+      //Function for closing the create user dialog
+      const handleClose = () => {
+        setOpen(false);
+      };
+
 
   return (
     <Grid sx={{width:'100%'}}>
         <Stack direction='column' alignItems={'center'}>
             <Stack direction='row' sx={{width:'100%', pb:2}}>
                 <Typography variant='h4' sx={{fontFamily:'arvo', flexGrow:1}}>
-                    Admin Management System
+                    Employee Management System
                 </Typography>
                 <Tabs
                     value={value}
@@ -58,8 +73,31 @@ const AdminManagement = ({toast}) => {
             <Grid sx={{width:'100%', margin:'-15px'}}>
                 <Divider/>
             </Grid>
+
+            <Grid sx={{width:'100%', pt:5, display: value===1 ? 'flex':'none'}}>
+                <Stack direction='column' sx={{width:'100%'}}>
+                    <Stack direction='row'  sx={{width:'100%', marginBottom:'-10px'}}> 
+                        <div style={{flexGrow:1}}/>
+                        <Button onClick={()=>handleClickOpen()} variant='contained' sx={{width:180, textTransform:'none', fontFamily:'arvo', color: 'white'}} startIcon={<AiOutlineUserAdd />}>
+                            Add employee
+                        </Button>
+                    </Stack>
+                    
+                    <ActiveEmployeeTable toast={(stringMessage) => toast(stringMessage)}/>
+                </Stack>
+               
+            </Grid>     
+
+            <Grid sx={{width:'100%', pt:3, display: value===2 ? 'flex':'none'}}>     
+                    ?
+                    {/*  */}
+            </Grid>             
             
         </Stack>
+
+        <Dialog open={open} onClose={handleClose} scroll='body'>
+          <NewEmployeeForm onClose={() => handleClose()} toast={(stringMessage)=>toast(stringMessage)}/>
+        </Dialog>
 
 
     </Grid>
