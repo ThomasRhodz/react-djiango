@@ -8,7 +8,9 @@ const Login = () => {
   return (
     <Grid container direction='row' alignItems='center' sx={{
         width:680,
-        height:400,
+        height:'100%',
+        minHeight:400,
+        maxHeight:420,
         backgroundColor:'#06283D',
         borderRadius:4,
         position: 'absolute',

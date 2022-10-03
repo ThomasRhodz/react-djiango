@@ -15,6 +15,7 @@ export const userApi = createApi ({
             },
             invalidatesTags: ['User'],
         }),
+
         getUsers: builder.query({
             query(params) {
                 return {
@@ -32,6 +33,17 @@ export const userApi = createApi ({
                     url: 'user/status/1',
                     method: 'GET',
                     params,
+                };   
+            },
+            providesTags: ['User'],
+        }),
+        
+        getUsersInfo: builder.query({
+            query(body) {
+                const { email, password} = body;
+                return {
+                    url: `user/${email}/${password}`,
+                    method: 'GET',
                 };   
             },
             providesTags: ['User'],
@@ -74,4 +86,4 @@ export const userApi = createApi ({
     })
 })
 
-export const {useAddUserMutation, useDeleteUserMutation, useGetUsersQuery,useGetActiveUsersQuery, useGetInactiveUsersQuery, useUpdateUserMutation} = userApi;
+export const {useAddUserMutation, useDeleteUserMutation, useGetUsersQuery,useGetActiveUsersQuery, useGetUsersInfoQuery, useGetInactiveUsersQuery, useUpdateUserMutation} = userApi;

@@ -10,8 +10,8 @@ import TableRow from '@mui/material/TableRow';
 
 //Dialog
 import Dialog from '@mui/material/Dialog';
-import EditEmployeeForm from '../forms/EditEmployeeForm';
-import { useGetActiveEmployeesQuery } from '../../services/employeeApi';
+import EmployeeEnable from '../dialogs/EmployeeEnable';
+import { useGetInactiveEmployeesQuery } from '../../services/employeeApi';
 
 const columns = [
     { id: 'UID', label: 'Employee ID', minWidth: 100 },
@@ -36,10 +36,10 @@ const columns = [
     return { UID, name, address, email, contact, role, password, isActive, first_name, last_name};
   }
 
-const ActiveEmployeeTable = ({search, toast}) => {
+const InActiveEmployeeTable = ({search, toast}) => {
 
     
-    const users = useGetActiveEmployeesQuery();
+    const users = useGetInactiveEmployeesQuery();
     const rows = users.data ? users.data.data.map(({id, first_name, last_name, address, email, contact, role, password, isActive}) => createData(id, (first_name+' '+last_name), address, email, contact, role, password, isActive, first_name, last_name)) : [];
     
     const [id, setID] = React.useState('');
@@ -126,7 +126,7 @@ const ActiveEmployeeTable = ({search, toast}) => {
         />
 
         <Dialog open={open} onClose={handleUserClose} scroll='body'>
-          <EditEmployeeForm 
+          <EmployeeEnable 
             onClose={() => handleUserClose()} 
             user_id={id} 
             user_first_name={first_name}
@@ -144,4 +144,4 @@ const ActiveEmployeeTable = ({search, toast}) => {
   )
 }
 
-export default ActiveEmployeeTable
+export default InActiveEmployeeTable

@@ -14,6 +14,7 @@ import {RiAdminFill} from 'react-icons/ri'
 import {FaUser} from 'react-icons/fa'
 import { BsFilePostFill} from 'react-icons/bs'
 import { HiOutlineLogout} from 'react-icons/hi'
+import { AiFillHome } from 'react-icons/ai';
 
 //For notification
 import { ToastContainer, toast } from 'react-toastify';
@@ -24,6 +25,8 @@ import AdminManagement from './AdminManagement';
 import UserManagement from './UserManagement';
 import PostManagement from './PostManagement';
 import { navigate } from 'gatsby';
+
+import { useSelector } from 'react-redux'
 
 //Styling the drawer
 const drawerWidth = 240;
@@ -97,6 +100,8 @@ const AppBar = styled(MuiAppBar, {
 
 const MenuDrawer = () => {
 
+  const userRole = useSelector(state => state.user.role)
+
   //initializing a tost as a function that will be dynamic depending on the action done by the user.
   const notify = (message) => toast(message, {
     position: "top-right",
@@ -111,6 +116,7 @@ const MenuDrawer = () => {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [selectedItem, setSelectedItem] = React.useState(1);
+  const [menuItems, setMenuItems] = React.useState([]);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -121,7 +127,18 @@ const MenuDrawer = () => {
   };
 
   //Menu item
-    const menuItems = [
+
+  React.useEffect (() => {
+    if (userRole === 'Moderator') {
+      const menu = [
+        {
+            id: 1,
+            item: 'Post Management'
+        }
+      ];
+      setMenuItems(menu);
+    } else if (userRole === 'Admin'){
+      const menu = [
         {
             id: 1,
             item: 'Post Management'
@@ -134,14 +151,30 @@ const MenuDrawer = () => {
             id: 3,
             item: 'User Management'
         }, 
-    ]
-
+      ];
+      setMenuItems(menu);
+    }else if (userRole === 'User'){
+      const menu = [
+        {
+            id: 1,
+            item: 'Home'
+        }
+      ];
+      setMenuItems(menu);
+    }
+  }, [])
+    
+  
+    
+    
     const iconChanger = (iconName) => {
         if (iconName === 'Post Management'){
             return( <BsFilePostFill style={{fontSize:23, color: selectedItem === 1 ? 'white': '#A7C4BC'}} />);
         } else if (iconName === 'Admin Management'){
             return( <RiAdminFill style={{fontSize:23, color: selectedItem === 2 ? 'white': '#A7C4BC'}} />);
-        } else {
+        } else if (iconName === 'Home'){
+          return( <AiFillHome style={{fontSize:23, color: selectedItem === 1 ? 'white': '#A7C4BC'}} />);
+      }else {
             return( <FaUser style={{fontSize:23, color: selectedItem === 3 ? 'white': '#A7C4BC'}} />);
         }
     }
@@ -261,15 +294,15 @@ const MenuDrawer = () => {
         <Grid container direction='column' alignItems='center' sx={{ width:'100%', height:'500', p:5, pt:3}}>
 
             {/* From here, Grid item will be displayed base on the value of selectedItem */}
-            <Grid item sx={{p:5, width:'100%', height:300, display: selectedItem === 1 ? 'flex': 'none'}} >
+            <Grid item sx={{p:5, width:'100%', height:300, display: (selectedItem === 1 && (userRole === 'Admin' || userRole === 'Moderator')) ? 'flex': 'none'}} >
                 <PostManagement toast={(stringMessage)=>notify(stringMessage)}/>
             </Grid>
 
-            <Grid item sx={{p:5, width:'100%', height:300, display: selectedItem === 2 ? 'flex': 'none'}} >
+            <Grid item sx={{p:5, width:'100%', height:300, display: (selectedItem === 2 && userRole === 'Admin') ? 'flex': 'none'}} >
                 <AdminManagement toast={(stringMessage)=>notify(stringMessage)}/>
             </Grid>
 
-            <Grid item sx={{p:5, width:'100%', height:300, display: selectedItem === 3 ? 'flex': 'none'}} >
+            <Grid item sx={{p:5, width:'100%', height:300, display: (selectedItem === 2 && userRole === 'Admin')  ? 'flex': 'none'}} >
                 <UserManagement toast={(stringMessage)=>notify(stringMessage)}/>
             </Grid>
         </Grid>

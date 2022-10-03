@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query'
 //Redux
-import counterReducer from './counter'
+import userReducer from './user'
 
 //RTK Query
 import { userApi } from '../services/userAPi'
@@ -11,7 +11,7 @@ import { employeeApi } from '../services/employeeApi';
 
 export const store = configureStore({
     reducer:{
-        counter: counterReducer,
+        user: userReducer,
         [userApi.reducerPath]: userApi.reducer,
         [employeeApi.reducerPath]: employeeApi.reducer
     },

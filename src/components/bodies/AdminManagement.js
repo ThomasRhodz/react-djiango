@@ -6,6 +6,7 @@ import {AiOutlineUserAdd} from 'react-icons/ai'
 
 import NewEmployeeForm from '../forms/NewEmployeeForm';
 import ActiveEmployeeTable from '../tables/ActiveEmployeeTable';
+import InActiveEmployeeTable from '../tables/InactiveEmployeeTable';
 
 const AdminManagement = ({toast}) => {
     const [value, setValue] = React.useState(1);
@@ -89,8 +90,7 @@ const AdminManagement = ({toast}) => {
             </Grid>     
 
             <Grid sx={{width:'100%', pt:3, display: value===2 ? 'flex':'none'}}>     
-                    ?
-                    {/*  */}
+                   <InActiveEmployeeTable toast={(stringMessage) => toast(stringMessage)}/>
             </Grid>             
             
         </Stack>

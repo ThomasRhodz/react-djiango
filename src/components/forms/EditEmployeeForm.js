@@ -1,5 +1,6 @@
-import { Grid, TextField, Stack, DialogTitle, DialogActions, Divider, Button, Select, FormControl, InputLabel, MenuItem } from '@mui/material'
-import React, {useState} from 'react'
+import { Grid, TextField, Stack, DialogTitle, DialogActions, Divider, Button, Select, FormControl, InputLabel, MenuItem, Typography, IconButton, Tooltip } from '@mui/material'
+import React, {useState} from 'react';
+import {MdCancel} from 'react-icons/md';
 
 // Form and Data Handling
 import {useForm } from 'react-hook-form';
@@ -64,17 +65,49 @@ const EditEmployeeForm = ({onClose, toast,user_id, user_first_name, user_last_na
       updateEmployee(input);
       toast('New Employee was successfully updated.');
       onClose();
-    }
-
-    
-    
+    }   
 };
 
+const handleDeactivate = () => {
+
+      //saving teh data frok the form ans making a body taht will be pass on and use in the http request for storing a new instance of a user.
+      const input = {
+        id: user_id,
+        data:{
+            'first_name': user_first_name,
+            'last_name': user_last_name,
+            'address': user_address,
+            'email': user_email,
+            'contact': user_contact,
+            'role': user_role,
+            'password': user_password,
+            'isActive': 'No'
+        }
+      }
+
+      updateEmployee(input);
+      toast('New Employee was successfully deactivated.');
+      onClose();
+};
+
+
   return (
-    <Grid>
+    <Grid sx={{p:2}}>
       <Stack direction='column' alignItems='center' sx={{ width: '100%' }}>
-          <Grid item>
-            <DialogTitle>Add New Employee</DialogTitle>
+          <Grid item sx={{width:'100%'}}>
+            <Stack direction='row'>
+                <DialogTitle sx={{flexGrow:1}}>
+                    <Typography variant='h6' sx={{fontFamily:'arvo'}}>
+                        Edit Employee Form
+                    </Typography>
+                </DialogTitle>
+                <Tooltip title='close'>
+                    <IconButton color="primary" onClick={() => onClose()}>
+                        <MdCancel style={{fontSize:35}} />
+                    </IconButton>
+                </Tooltip>
+                
+            </Stack>
           </Grid>
 
           <Grid item sx={{ width: '100%' }}>
@@ -85,7 +118,7 @@ const EditEmployeeForm = ({onClose, toast,user_id, user_first_name, user_last_na
       <form style={{width:'100%'}} onSubmit={handleSubmit(onSubmit)}>
       <Grid container direction='column' alignItems='center' sx={{width: 500, height:'100%', p:2}}>
         
-        <div style={{height:15}} />
+        <div style={{height:20}} />
         <Stack direction='row'>
             <Grid item style={{ width:'100%'}}>
                 <TextField 
@@ -98,7 +131,7 @@ const EditEmployeeForm = ({onClose, toast,user_id, user_first_name, user_last_na
                     required
                 />
             </Grid>
-            <div style={{width:10}} />
+            <div style={{width:20}} />
             <Grid item style={{ width:'100%'}}>
                 <TextField 
                     {...register("last_name")}
@@ -112,7 +145,7 @@ const EditEmployeeForm = ({onClose, toast,user_id, user_first_name, user_last_na
             </Grid>
         </Stack>
 
-        <div style={{height:15}} />
+        <div style={{height:20}} />
         <Grid item style={{ width:'100%'}}>
             <TextField 
                 {...register("address")}
@@ -126,7 +159,7 @@ const EditEmployeeForm = ({onClose, toast,user_id, user_first_name, user_last_na
             />
         </Grid>
 
-        <div style={{height:15}} />
+        <div style={{height:20}} />
         <Stack direction='row'>
             <Grid item style={{ width:'100%'}}>
                 <TextField 
@@ -141,7 +174,7 @@ const EditEmployeeForm = ({onClose, toast,user_id, user_first_name, user_last_na
                 />
             </Grid>
 
-            <div style={{width:10}} />
+            <div style={{width:20}} />
             <Grid item style={{ width:'100%'}}>
                 <TextField 
                     {...register("contact")}
@@ -155,7 +188,7 @@ const EditEmployeeForm = ({onClose, toast,user_id, user_first_name, user_last_na
             </Grid>
         </Stack>
 
-        <div style={{height:15}} />
+        <div style={{height:20}} />
         <Grid item  sx={{ width:'100%' }}>
             <FormControl variant="outlined" sx={{ width:'100%' }}>
             <InputLabel id="demo-simple-select-helper-label">Role</InputLabel>
@@ -179,7 +212,7 @@ const EditEmployeeForm = ({onClose, toast,user_id, user_first_name, user_last_na
         </Grid>
         
 
-        <div style={{height:15}} />
+        <div style={{height:20}} />
         <Grid item style={{ width:'100%'}}>
             <TextField 
                 {...register("password")}
@@ -193,7 +226,7 @@ const EditEmployeeForm = ({onClose, toast,user_id, user_first_name, user_last_na
             />
         </Grid>
 
-        <div style={{height:15}} />
+        <div style={{height:20}} />
         <Grid item style={{ width:'100%'}}>
             <TextField 
                 {...register("retype_password")}
@@ -209,8 +242,8 @@ const EditEmployeeForm = ({onClose, toast,user_id, user_first_name, user_last_na
       </Grid>
 
       <DialogActions sx={{ paddingRight:2 }}>
-          <Button type='button' onClick={()=>onClose()} sx={{ height:45, minWidth:40, borderRadius:1, color: 'black', backgroundColor:'transparent', fontFamily:'Playfair Display', textTransform:'NONE'}}>
-              Discard
+          <Button type='button' onClick={()=>handleDeactivate()} sx={{ height:45, minWidth:40, borderRadius:1, color: 'black', backgroundColor:'transparent', fontFamily:'Playfair Display', textTransform:'NONE'}}>
+              Deactivate
           </Button>
           <Button variant='contained' type='submit'  sx={{ height:45, minWidth:40, borderRadius:1, color: 'white', textTransform:'none', fontFamily:'Playfair Display',}}>
               submit

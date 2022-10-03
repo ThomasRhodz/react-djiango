@@ -25,6 +25,17 @@ export const employeeApi = createApi ({
             },
             providesTags: ['Employee'],
         }), 
+        
+        getEmployeeInfo: builder.query({
+            query(body) {
+                const { email, password} = body;
+                return {
+                    url: `employee/${email}/${password}`,
+                    method: 'GET',
+                };   
+            },
+            providesTags: ['Employee'],
+        }), 
 
         getActiveEmployees: builder.query({
             query(params) {
@@ -74,4 +85,4 @@ export const employeeApi = createApi ({
     })
 })
 
-export const {useAddEmployeeMutation, useDeleteEmployeeMutation, useGetEmployeesQuery,useGetActiveEmployeesQuery, useGetInactiveEmployeesQuery, useUpdateEmployeeMutation} = employeeApi;
+export const {useAddEmployeeMutation, useDeleteEmployeeMutation, useGetEmployeeInfoQuery, useGetEmployeesQuery,useGetActiveEmployeesQuery, useGetInactiveEmployeesQuery, useUpdateEmployeeMutation} = employeeApi;
