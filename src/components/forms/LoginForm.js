@@ -4,8 +4,8 @@ import React from 'react'
 import { useGetUsersInfoQuery } from '../../services/userAPi'
 import { useGetEmployeeInfoQuery } from '../../services/employeeApi'
 
-import { useSelector, useDispatch } from 'react-redux'
-import { setRole } from '../../redux/user'
+import { useDispatch } from 'react-redux'
+import { setRole, setID,setName } from '../../redux/user'
 
 // Form and Data Handling
 import {useForm } from 'react-hook-form';
@@ -65,8 +65,20 @@ const LoginForm = () => {
 
         if (User.isSuccess && userResult === 1){
             let role = User.data ? User.data.data[0].role : '';
+            let name = '';
+            if (role === 'User'){
+                name = User.data ? User.data.data[0].name : '';
+            }
+            else{
+                name = User.data ? (User.data.data[0].first_name + ' ' + User.data.data[0].last_name) : '';
+            }
+            let id = User.data ? User.data.data[0].id : '';
+
+            dispatch(setName(name));
+            dispatch(setID(id));
             dispatch(setRole(role));
             navigate('/module') ;
+
         } else if (Employee.isSuccess && employeeResult === 1){
             let role = Employee.data ? Employee.data.data[0].role : '';
             dispatch(setRole(role));

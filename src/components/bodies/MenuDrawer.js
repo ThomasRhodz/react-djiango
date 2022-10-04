@@ -24,6 +24,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import AdminManagement from './AdminManagement';
 import UserManagement from './UserManagement';
 import PostManagement from './PostManagement';
+import Feed from './Feed';
 import { navigate } from 'gatsby';
 
 import { useSelector } from 'react-redux'
@@ -100,7 +101,9 @@ const AppBar = styled(MuiAppBar, {
 
 const MenuDrawer = () => {
 
-  const userRole = useSelector(state => state.user.role)
+  const userRole = useSelector(state => state.user.role);
+  const userID = useSelector(state => state.user.id);
+  const userName = useSelector(state => state.user.name);
 
   //initializing a tost as a function that will be dynamic depending on the action done by the user.
   const notify = (message) => toast(message, {
@@ -162,7 +165,7 @@ const MenuDrawer = () => {
       ];
       setMenuItems(menu);
     }
-  }, [])
+  }, [userRole])
     
   
     
@@ -254,6 +257,11 @@ const MenuDrawer = () => {
             React Django Example
           </Typography>
 
+          <Typography variant="h6" sx={{fontFamily:'Arvo', flexGrow: 1, color:'white'}} noWrap component="div">
+            {/* {'UID 00'+ userID + ': ' + userName+ ' ('+ userRole +') '} */}
+            {'UID 00'+ userID + ': ' + userRole}
+          </Typography>
+
           <Tooltip title='Log Out'> 
             <IconButton
               color="inherit"
@@ -302,8 +310,12 @@ const MenuDrawer = () => {
                 <AdminManagement toast={(stringMessage)=>notify(stringMessage)}/>
             </Grid>
 
-            <Grid item sx={{p:5, width:'100%', height:300, display: (selectedItem === 2 && userRole === 'Admin')  ? 'flex': 'none'}} >
+            <Grid item sx={{p:5, width:'100%', height:300, display: (selectedItem === 3 && userRole === 'Admin')  ? 'flex': 'none'}} >
                 <UserManagement toast={(stringMessage)=>notify(stringMessage)}/>
+            </Grid>
+
+            <Grid item sx={{p:5, width:'100%', height:'100%', display: (selectedItem === 1 && userRole === 'User')  ? 'flex': 'none'}} >
+                <Feed toast={(stringMessage)=>notify(stringMessage)}/>
             </Grid>
         </Grid>
         

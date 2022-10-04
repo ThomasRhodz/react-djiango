@@ -10,10 +10,16 @@ export const userSlice = createSlice({
     reducers:{
         setRole: (state, action) => {
             state.role = action.payload
+        },
+        setName: (state, action) => {
+            state.name = action.payload
+        },
+        setID: (state, action) => {
+            state.id = action.payload
         }
     }
 
 });
 
-export const {setRole} = userSlice.actions;
+export const {setRole, setName, setID} = userSlice.actions;
 export default userSlice.reducer;
