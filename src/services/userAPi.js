@@ -27,6 +27,16 @@ export const userApi = createApi ({
             providesTags: ['User'],
         }), 
 
+        getExactUser: builder.query({
+            query(id) {
+                return {
+                    url: `user/${id}`,
+                    method: 'GET',  
+                };     
+            },
+            invalidatesTags: ['User'],
+        }),
+
         getActiveUsers: builder.query({
             query(params) {
                 return {
@@ -86,4 +96,4 @@ export const userApi = createApi ({
     })
 })
 
-export const {useAddUserMutation, useDeleteUserMutation, useGetUsersQuery,useGetActiveUsersQuery, useGetUsersInfoQuery, useGetInactiveUsersQuery, useUpdateUserMutation} = userApi;
+export const {useAddUserMutation, useGetExactUserQuery, useDeleteUserMutation, useGetUsersQuery,useGetActiveUsersQuery, useGetUsersInfoQuery, useGetInactiveUsersQuery, useUpdateUserMutation} = userApi;

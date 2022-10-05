@@ -2,11 +2,17 @@ import { Grid, Typography, Stack, Avatar, IconButton, Tooltip, Divider, Menu, Me
 import { BsThreeDots } from 'react-icons/bs'
 import { useSelector } from 'react-redux'
 import EditPost from '../forms/EditPost'
+import { useGetExactUserQuery } from '../../services/userAPi'
 
 import React from 'react'
 
 
-const PostCard = ({toast, id, caption, uid, stats}) => {
+const PostCard = ({toast, id, caption, uid, stats, usedIn}) => {
+
+    const user = useGetExactUserQuery(uid)
+    const userName = user.data ? user.data.name : ''
+    
+
     const userID = useSelector(state => state.user.id);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
@@ -36,14 +42,15 @@ const PostCard = ({toast, id, caption, uid, stats}) => {
             height:'100%', 
             backgroundColor:'white',
             borderRadius: 2,
-            boxShadow:'2.0px 4.0px 4.0px hsl(0deg 0% 0% / 0.38)',
+            boxShadow: usedIn ? '' : '2.0px 4.0px 4.0px hsl(0deg 0% 0% / 0.38)',
+            border:usedIn ? '1px solid black' : '',
             overflow:'hidden'
         }} 
     >
-        <Grid item sx={{p:2, width:'100%'}}>
+        <Grid item sx={{p:2, pl:3, width:'100%'}}>
            <Stack direction='row' sx={{width:'100%'}}>
                 <Avatar 
-                    alt="Remy Sharp"
+                    alt={userName}
                     sx={{
                         border:'3px solid #06283D',
                         width:50,
@@ -53,26 +60,27 @@ const PostCard = ({toast, id, caption, uid, stats}) => {
                 />
                 <Stack direction='column' sx={{pl:2}}>
                     <Typography variant='body1' sx={{fontFamily:'Arvo', fontWeight:'bold'}}>
-                        John ELiezar Rodis
+                        {userName}
                     </Typography>
                     <Typography variant='body2' sx={{fontFamily:'Arvo'}}>
-                       { 'UID: 000 ' + id}
+                       { 'UID: 000' + uid}
                     </Typography>
                 </Stack>
                 <Grid sx={{flexGrow:1}} />
-                <Tooltip title={'Options'}>
-                    <IconButton 
-                        disabled = {!(id === userID )}
-                        id="basic-button"
-                        aria-controls={open ? 'basic-menu' : undefined}
-                        aria-haspopup="true"
-                        aria-expanded={open ? 'true' : undefined}
-                        onClick={handleClick}
-                        sx={{p:2, mt:'-10px'}}
-                    >
-                        <BsThreeDots style={{fontSize:20}} />
-                    </IconButton>
-                </Tooltip>
+                <Grid   disabled = {(uid !== userID )}>   
+                    <Tooltip title={'Options'}>
+                        <IconButton 
+                            id="basic-button"
+                            aria-controls={open ? 'basic-menu' : undefined}
+                            aria-haspopup="true"
+                            aria-expanded={open ? 'true' : undefined}
+                            onClick={handleClick}
+                            sx={{p:2, mt:'-10px'}}
+                        >
+                            <BsThreeDots style={{fontSize:20}} />
+                        </IconButton>
+                    </Tooltip>
+                </Grid>
                     <Menu
                         id="basic-menu"
                         anchorEl={anchorEl}
@@ -93,8 +101,8 @@ const PostCard = ({toast, id, caption, uid, stats}) => {
             <Divider />
         </Grid>
 
-        <Grid item sx={{p:4, pl:2, width:'100%'}} >
-            <Typography variant='h5' sx={{fontFamily:'Arvo'}}>
+        <Grid item sx={{p:4, pl:3, pt:3, width:'100%'}} >
+            <Typography variant='h6' align='justify' sx={{fontFamily:'Arvo'}}>
                 {caption}
             </Typography>
         </Grid>

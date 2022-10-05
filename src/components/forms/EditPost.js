@@ -6,8 +6,6 @@ import {MdCancel} from 'react-icons/md';
 import {useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
-
-import { useSelector } from 'react-redux';
 import { useUpdatePostMutation } from '../../services/postApi';
 
 
@@ -17,9 +15,8 @@ const schema = yup.object({
 });
 
 
-const EditPost = ({onClose, toast, id, caption, user_id, status}) => {
+const EditPost = ({onClose, toast, id, caption, user_id, stats}) => {
 
-  const userID = useSelector(state => state.user.id);
 
    //For react hook form
    const {register, handleSubmit} = useForm({
@@ -37,7 +34,7 @@ const EditPost = ({onClose, toast, id, caption, user_id, status}) => {
         data: {
             'post_caption': data.post_caption,
             'user_id': user_id,
-            'status': status,
+            'status': stats,
         }
       }
 

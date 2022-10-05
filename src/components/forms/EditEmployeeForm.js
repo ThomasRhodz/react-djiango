@@ -36,6 +36,7 @@ const EditEmployeeForm = ({onClose, toast,user_id, user_first_name, user_last_na
   const [contact, setContact] = useState(user_contact);
   const [password, setPass] = useState(user_password);
   const [retype_password, setRetypePass] = useState(user_password);
+  const [contentChange, setContentChange] = useState(true);
 
   const [updateEmployee] = useUpdateEmployeeMutation();
 
@@ -102,7 +103,7 @@ const handleDeactivate = () => {
                     </Typography>
                 </DialogTitle>
                 <Tooltip title='close'>
-                    <IconButton color="primary" onClick={() => onClose()}>
+                    <IconButton color="primary" onClick={() => onClose()} sx={{p:2, mt:'-15px'}}>
                         <MdCancel style={{fontSize:35}} />
                     </IconButton>
                 </Tooltip>
@@ -126,7 +127,10 @@ const handleDeactivate = () => {
                     label={'First Name'} 
                     style={{ width: '100%' }}
                     value={firstName}
-                    onChange={(event) => setFirstName(event.target.value)}
+                    onChange={(event) => {
+                        setFirstName(event.target.value)
+                        setContentChange(false)
+                    }}
                     size='regular'
                     required
                 />
@@ -138,7 +142,10 @@ const handleDeactivate = () => {
                     label={'Last Name'} 
                     style={{ width: '100%' }}
                     value={lastName}
-                    onChange={(event) => setLastName(event.target.value)}
+                    onChange={(event) => {
+                        setLastName(event.target.value)
+                        setContentChange(false)
+                    }}
                     size='regular'
                     required
                 />
@@ -153,7 +160,10 @@ const handleDeactivate = () => {
                 label={'Address'} 
                 style={{ width: '100%' }}
                 value={address}
-                onChange={(event) => setAddress(event.target.value)}
+                onChange={(event) => {
+                    setAddress(event.target.value)
+                    setContentChange(false)
+                }}
                 size='regular'
                 required
             />
@@ -168,7 +178,10 @@ const handleDeactivate = () => {
                     label={'Email'} 
                     style={{ width: '100%' }}
                     value={email}
-                    onChange={(event) => setEmail(event.target.value)}
+                    onChange={(event) => {
+                        setEmail(event.target.value)
+                        setContentChange(false)
+                    }}
                     size='regular'
                     required
                 />
@@ -181,7 +194,10 @@ const handleDeactivate = () => {
                     label={'Contact'} 
                     style={{ width: '100%' }}
                     value={contact}
-                    onChange={(event) => setContact(event.target.value)}
+                    onChange={(event) => {
+                        setContact(event.target.value)
+                        setContentChange(false)
+                    }}
                     size='regular'
                     required
                 />
@@ -199,7 +215,10 @@ const handleDeactivate = () => {
                 label='Role'
                 size='regular'
                 value={role}
-                onChange={(event) => setRole(event.target.value)}
+                onChange={(event) => {
+                    setRole(event.target.value)
+                    setContentChange(false)
+                }}
             >
                 <MenuItem value={'Admin'}>
                     Admin
@@ -220,7 +239,10 @@ const handleDeactivate = () => {
                 label={'Password'} 
                 style={{ width: '100%' }}
                 value={password}
-                onChange={(event) => setPass(event.target.value)}
+                onChange={(event) => {
+                    setPass(event.target.value)
+                    setContentChange(false)
+                }}
                 size='regular'
                 required
             />
@@ -234,7 +256,10 @@ const handleDeactivate = () => {
                 label={'Retype Pasword'} 
                 style={{ width: '100%' }}
                 value={retype_password}
-                onChange={(event) => setRetypePass(event.target.value)}
+                onChange={(event) => {
+                    setRetypePass(event.target.value)
+                    setContentChange(false)
+                }}
                 size='regular'
                 required
             />
@@ -245,8 +270,8 @@ const handleDeactivate = () => {
           <Button type='button' onClick={()=>handleDeactivate()} sx={{ height:45, minWidth:40, borderRadius:1, color: 'black', backgroundColor:'transparent', fontFamily:'Playfair Display', textTransform:'NONE'}}>
               Deactivate
           </Button>
-          <Button variant='contained' type='submit'  sx={{ height:45, minWidth:40, borderRadius:1, color: 'white', textTransform:'none', fontFamily:'Playfair Display',}}>
-              submit
+          <Button variant='contained' type='submit' disabled={contentChange} sx={{ height:45, minWidth:40, borderRadius:1, color: 'white', textTransform:'none', fontFamily:'Playfair Display',}}>
+              Submit
           </Button>
       </DialogActions>
       </form>
